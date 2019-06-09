@@ -10,29 +10,59 @@
 
 import random
 
-A = 11
+# A = 11
 J = 10
 Q = 10
 K = 10
-cards = [A,2,3,4,5,6,7,8,9,10,J,Q,K] * 4
+cards = ["A",2,3,4,5,6,7,8,9,10,J,Q,K] * 4
 
 
 def main():
     """
     メイン関数
     """
+    you_bet = input("いくら賭けますか？ 金額を入力してください:")
+    print("あなたの賭けた金額 $" + you_bet)
+
     you_hand1 = cards.pop(get_rand_index(cards))
     you_hand2 = cards.pop(get_rand_index(cards))
     print("あたなの手札" + str(you_hand1),str(you_hand2))
 
     dealer_hand1 = cards.pop(get_rand_index(cards))
+    if dealer_hand1 == "A":
+        dealer_hand1 = "11"
     dealer_hand2 = cards.pop(get_rand_index(cards))
+    if dealer_hand2 == "A":
+        dealer_hand2 = "11"
+
+    # Aを1か11か選ぶ（1回目)
+    if you_hand1 == "A":
+        A_choice = input("Aの数字はどうしますか？ 1 or 11 :")
+        if A_choice == "1":
+            you_hand1 = "1"
+        elif A_choice == "11":
+            you_hand1 = "11"
+    
+    if you_hand2 == "A":
+        A_choice = input("Aの数字はどうしますか？ 1 or 11 :")
+        if A_choice == "1":
+            you_hand2 = "1"
+        elif A_choice == "11":
+            you_hand2 = "11"
 
     you_add = 0
-    add = input("カードを追加しますか 1=YES, 2=NO: ")
+    add = input("カードを追加しますか？ 1-HIT, 2-STAND :")
     if int(add) == 1 :
         you_add = random.choice(cards)
         print("追加されたカード" + str(you_add))
+
+    # Aを1か11か選ぶ（2回目)
+    if you_add == "A":
+        A_choice = input("Aの数字はどうしますか？ 1 or 11 :")
+        if A_choice == "1":
+            you_add = "1"
+        elif A_choice == "11":
+            you_add = "11"
 
     print("ディーラーの手札" + str(dealer_hand1),str(dealer_hand2))
 
@@ -43,17 +73,25 @@ def main():
         if you_total <= 21:
             if you_total == 21:
                 print("Black Jack!")
+                bet = int(you_bet) * 2
+                print("$" + str(bet) + " GET!")
             print("YOU WIN!")
+            bet = int(you_bet) * 2
+            print("$" + str(bet) + " GET!")
+
 
         else:
             print("YOU LOSE!")
     elif you_total == dealer_total:
         print("DRAW")
+        print("払い戻し金 $" + you_bet)
     else:
         if dealer_total <= 21:
             print("YOU LOSE!")
         else:
             print("YOU WIN!")
+            bet = int(you_bet) * 2
+            print("$" + str(bet) + " GET!")
 
 def get_rand_index(cards):
     """
