@@ -21,6 +21,9 @@ def main():
     """
     メイン関数
     """
+    you_bet = input("いくら賭けますか？ 金額を入力してください:")
+    print("あなたの賭けた金額 $" + you_bet)
+
     you_hand1 = cards.pop(get_rand_index(cards))
     you_hand2 = cards.pop(get_rand_index(cards))
     print("あたなの手札" + str(you_hand1),str(you_hand2))
@@ -48,7 +51,7 @@ def main():
             you_hand2 = "11"
 
     you_add = 0
-    add = input("カードを追加しますか 1=YES, 2=NO: ")
+    add = input("カードを追加しますか？ 1-HIT, 2-STAND :")
     if int(add) == 1 :
         you_add = random.choice(cards)
         print("追加されたカード" + str(you_add))
@@ -70,17 +73,25 @@ def main():
         if you_total <= 21:
             if you_total == 21:
                 print("Black Jack!")
+                bet = int(you_bet) * 2
+                print("$" + str(bet) + " GET!")
             print("YOU WIN!")
+            bet = int(you_bet) * 2
+            print("$" + str(bet) + " GET!")
+
 
         else:
             print("YOU LOSE!")
     elif you_total == dealer_total:
         print("DRAW")
+        print("払い戻し金 $" + you_bet)
     else:
         if dealer_total <= 21:
             print("YOU LOSE!")
         else:
             print("YOU WIN!")
+            bet = int(you_bet) * 2
+            print("$" + str(bet) + " GET!")
 
 def get_rand_index(cards):
     """
